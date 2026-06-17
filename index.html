@@ -3,352 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URBAN FLOW | Parkour & Freerunning</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Urban Traceurs | Parkour & Freerunning</title>
+    <meta name="description" content="Entdecke die Kunst der Fortbewegung. Lerne Parkour von den Grundlagen bis zur Meisterschaft.">
     
+    <!-- Einbinden von Google Fonts für sportliche und lesbare Typografie -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome für Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS laden und konfigurieren -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        heading: ['Oswald', 'sans-serif'],
-                    },
                     colors: {
                         brand: {
-                            red: '#E53935',
-                            dark: '#121212',
-                            gray: '#1E1E1E',
-                            light: '#F5F5F5'
+                            DEFAULT: '#f97316', // Ein dynamisches Orange (orange-500)
+                            dark: '#ea580c',   // orange-600
+                            light: '#fdba74',  // orange-300
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
                         }
                     },
-                    animation: {
-                        'fade-in-up': 'fadeInUp 1s ease-out',
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
                     },
-                    keyframes: {
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+                    backgroundImage: {
+                        'hero-pattern': "linear-gradient(to right bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.6)), url('https://commons.wikimedia.org/wiki/Special:FilePath/Parkour_Frankfurt.jpg')",
+                        'action-pattern': "linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8)), url('https://commons.wikimedia.org/wiki/Special:FilePath/Freerunning-imageexample.jpg')",
                     }
                 }
             }
         }
     </script>
+
+    <!-- Custom CSS für Animationen und kleine Anpassungen -->
     <style>
-        /* Custom scrollbar for a sleeker look */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-        ::-webkit-scrollbar-track {
-            background: #121212; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #E53935; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff5252; 
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
         
-        .hero-bg {
-            background-image: linear-gradient(rgba(18, 18, 18, 0.7), rgba(18, 18, 18, 0.95)), url('https://images.unsplash.com/photo-1541334860-22c66c75ce23?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-        }
-
         .clip-diagonal {
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
         }
+        
+        .clip-diagonal-reverse {
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Verhindert horizontales Scrollen */
+        body {
+            overflow-x: hidden;
+            background-color: #0f172a; /* dark-900 */
+            color: #f8fafc; /* slate-50 */
+        }
     </style>
 </head>
-<body class="bg-brand-dark text-brand-light font-sans antialiased selection:bg-brand-red selection:text-white">
+<body class="font-sans antialiased text-slate-300">
 
-    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md bg-brand-dark/80 border-b border-white/10" id="navbar">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-dark-900/90 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-                    <i data-lucide="footprints" class="text-brand-red h-8 w-8"></i>
-                    <span class="font-heading font-bold text-2xl tracking-wider text-white uppercase">Urban Flow</span>
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="font-display font-bold text-2xl tracking-wider text-white">
+                        URBAN<span class="text-brand">TRACEURS</span>
+                    </a>
                 </div>
                 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#philosophie" class="text-gray-300 hover:text-brand-red transition-colors font-medium text-sm uppercase tracking-wide">Philosophie</a>
-                    <a href="#basics" class="text-gray-300 hover:text-brand-red transition-colors font-medium text-sm uppercase tracking-wide">Basics</a>
-                    <a href="#classes" class="text-gray-300 hover:text-brand-red transition-colors font-medium text-sm uppercase tracking-wide">Training</a>
-                    <a href="#join" class="bg-brand-red hover:bg-red-700 text-white px-6 py-2 rounded-sm font-heading font-semibold transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(229,57,53,0.4)]">Mitglied werden</a>
+                    <a href="#philosophie" class="text-sm font-medium hover:text-brand transition-colors uppercase tracking-wide">Philosophie</a>
+                    <a href="#techniken" class="text-sm font-medium hover:text-brand transition-colors uppercase tracking-wide">Techniken</a>
+                    <a href="#training" class="text-sm font-medium hover:text-brand transition-colors uppercase tracking-wide">Training</a>
+                    <a href="#kontakt" class="px-5 py-2.5 bg-brand text-white font-bold rounded-sm hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-lg shadow-brand/30 uppercase tracking-wide text-sm">
+                        Probetraining
+                    </a>
                 </div>
 
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white focus:outline-none">
-                        <i data-lucide="menu" class="h-6 w-6"></i>
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-brand-gray border-t border-white/10 absolute w-full">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#philosophie" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-red">Philosophie</a>
-                <a href="#basics" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-red">Basics</a>
-                <a href="#classes" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-brand-red">Training</a>
-                <a href="#join" class="block px-3 py-2 text-base font-medium text-brand-red font-bold">Mitglied werden</a>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-b border-white/10">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#philosophie" class="block px-3 py-3 text-base font-medium hover:bg-dark-700 hover:text-brand rounded-md">Philosophie</a>
+                <a href="#techniken" class="block px-3 py-3 text-base font-medium hover:bg-dark-700 hover:text-brand rounded-md">Techniken</a>
+                <a href="#training" class="block px-3 py-3 text-base font-medium hover:bg-dark-700 hover:text-brand rounded-md">Training</a>
+                <a href="#kontakt" class="block px-3 py-3 mt-4 text-center text-base font-bold bg-brand text-white rounded-md">Probetraining buchen</a>
             </div>
         </div>
     </nav>
 
-    <section class="relative h-screen flex items-center justify-center hero-bg clip-diagonal pt-20" id="home">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h1 class="font-heading text-5xl md:text-7xl lg:text-8xl font-bold text-white uppercase tracking-tighter mb-4 animate-fade-in-up">
-                Die Stadt ist <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-400">Dein Spielplatz</span>
+    <header class="relative h-screen min-h-[600px] flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed clip-diagonal">
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16">
+            <span class="block text-brand font-bold tracking-[0.2em] uppercase mb-4 text-sm md:text-base reveal">L'art du déplacement</span>
+            <h1 class="font-display font-bold text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-tight mb-6 reveal shadow-black drop-shadow-lg" style="transition-delay: 100ms;">
+                Überwinde <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-brand-light">Jedes Hindernis</span>
             </h1>
-            <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-300 md:text-2xl font-light mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
-                Lerne die Kunst der effizienten Fortbewegung. Überwinde physische und mentale Hindernisse. Finde deinen Flow.
+            <p class="mt-4 text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10 reveal" style="transition-delay: 200ms;">
+                Parkour ist nicht nur eine Sportart, es ist eine Art zu denken. Lerne deinen Körper kennen, nutze deine Umgebung und finde deinen eigenen Weg.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style="animation-delay: 0.4s;">
-                <a href="#join" class="bg-brand-red hover:bg-red-700 text-white px-8 py-4 rounded-sm font-heading font-bold text-lg uppercase tracking-wider transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(229,57,53,0.5)] flex items-center justify-center gap-2">
-                    Kostenloses Probetraining
-                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 reveal" style="transition-delay: 300ms;">
+                <a href="#training" class="px-8 py-4 bg-brand text-white font-bold rounded-sm hover:bg-brand-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-brand/40 text-lg uppercase tracking-wider">
+                    Jetzt Beginnen
                 </a>
-                <a href="#philosophie" class="border border-white/30 hover:border-white text-white px-8 py-4 rounded-sm font-heading font-bold text-lg uppercase tracking-wider transition-all hover:bg-white/5 flex items-center justify-center">
-                    Mehr erfahren
+                <a href="#philosophie" class="px-8 py-4 bg-transparent border-2 border-white/30 text-white font-bold rounded-sm hover:border-white hover:bg-white/5 transition-all text-lg uppercase tracking-wider">
+                    Mehr Erfahren
                 </a>
             </div>
         </div>
         
-        <!-- Scroll Indicator -->
+        <!-- Scroll Down Indicator -->
         <div class="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i data-lucide="chevron-down" class="text-white/50 w-8 h-8"></i>
+            <a href="#philosophie" class="text-white/50 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
         </div>
-    </section>
+    </header>
 
-    <section id="philosophie" class="py-24 bg-brand-dark">
+    <section id="philosophie" class="py-24 bg-dark-900">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div class="order-2 lg:order-1 relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-brand-red to-red-900 rounded-sm blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                    <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=2070&auto=format&fit=crop" alt="Parkour Athlet im Sprung" class="relative rounded-sm shadow-2xl grayscale hover:grayscale-0 transition-all duration-500 object-cover h-[500px] w-full">
-                </div>
-                
-                <div class="order-1 lg:order-2">
-                    <h2 class="text-brand-red font-heading font-bold text-sm tracking-[0.2em] uppercase mb-2">Die Philosophie</h2>
-                    <h3 class="text-4xl md:text-5xl font-heading font-bold text-white uppercase mb-6 leading-tight">Nicht nur Sport,<br>sondern Mindset</h3>
+                <div class="reveal">
+                    <h2 class="font-display font-bold text-4xl md:text-5xl text-white mb-6 uppercase">Être et <span class="text-brand">Durer</span></h2>
+                    <h3 class="text-xl text-slate-400 mb-6 font-light">"Sein und andauern" – Das Credo des Parkour.</h3>
                     
-                    <div class="space-y-6 text-gray-400 text-lg font-light leading-relaxed">
+                    <div class="space-y-6 text-slate-300 leading-relaxed">
                         <p>
-                            Entstanden in den 1990er Jahren in den Vororten von Paris durch David Belle und die Yamakasi, basiert Parkour (L'Art du Déplacement) auf der <strong class="text-white font-medium">„Méthode Naturelle“</strong>.
+                            Entwickelt in den späten 1980er Jahren in den Pariser Vororten (Banlieues) von Raymond und <strong>David Belle</strong>, basiert Parkour auf der "Méthode Naturelle" von Georges Hébert. Ursprünglich als militärisches Hindernistraining konzipiert, wurde es zu einer urbanen Bewegungskunst.
                         </p>
                         <p>
-                            Es geht nicht um waghalsige Stunts oder Wettbewerb. Es geht darum, von A nach B zu gelangen – so effizient, fließend und sicher wie möglich. Dein Körper ist das einzige Werkzeug. 
+                            Ein echter Traceur sucht nicht die Gefahr oder den Wettbewerb. Das Ziel der <em>L'art du déplacement</em> (Die Kunst der Fortbewegung) ist es, so effizient, sicher und flüssig wie möglich von Punkt A nach Punkt B zu gelangen – ausschließlich mit den Fähigkeiten des eigenen Körpers.
                         </p>
-                        <ul class="space-y-4 mt-8">
+                        <ul class="mt-6 space-y-4">
                             <li class="flex items-start">
-                                <i data-lucide="target" class="text-brand-red w-6 h-6 mr-3 mt-1 shrink-0"></i>
-                                <span><strong class="text-white">Effizienz über Show:</strong> Jede Bewegung hat einen Zweck. Schnelligkeit und Energieerhaltung stehen im Vordergrund.</span>
+                                <i class="fas fa-check-circle text-brand mt-1.5 mr-3"></i>
+                                <span><strong>Effizienz vor Show:</strong> Es geht nicht um Saltos (Freerunning), sondern um den direktesten Weg.</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="shield" class="text-brand-red w-6 h-6 mr-3 mt-1 shrink-0"></i>
-                                <span><strong class="text-white">Anpassungsfähigkeit:</strong> Die Welt ist nicht flach. Lerne Hindernisse nicht als Blockaden, sondern als Wege zu sehen.</span>
+                                <i class="fas fa-check-circle text-brand mt-1.5 mr-3"></i>
+                                <span><strong>Körperliche & Mentale Stärke:</strong> Hindernisse im Kopf überwinden, bevor man sie physisch meistert.</span>
                             </li>
                             <li class="flex items-start">
-                                <i data-lucide="brain" class="text-brand-red w-6 h-6 mr-3 mt-1 shrink-0"></i>
-                                <span><strong class="text-white">Selbsteinschätzung:</strong> Echtes Parkour erfordert höchste mentale Kontrolle. Du musst deine Fähigkeiten und Grenzen genau kennen.</span>
+                                <i class="fas fa-check-circle text-brand mt-1.5 mr-3"></i>
+                                <span><strong>Respekt:</strong> Gegenüber der Umgebung, den Mitmenschen und den eigenen Grenzen.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="basics" class="py-24 bg-brand-gray border-y border-white/5 relative overflow-hidden">
-        <!-- Background decorative elements -->
-        <div class="absolute top-0 right-0 -mt-20 -mr-20 text-white/5 font-heading text-[20rem] font-bold leading-none pointer-events-none select-none">PK</div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-brand-red font-heading font-bold text-sm tracking-[0.2em] uppercase mb-2">Fundament</h2>
-                <h3 class="text-4xl md:text-5xl font-heading font-bold text-white uppercase mb-4">Core Techniques</h3>
-                <p class="max-w-2xl mx-auto text-gray-400 text-lg">Bevor du fliegst, musst du laufen lernen. Dies sind die Grundbausteine jeder flüssigen Bewegung im urbanen Raum.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Tech Card 1 -->
-                <div class="bg-brand-dark p-8 rounded-sm border border-white/10 hover:border-brand-red/50 transition-colors group">
-                    <div class="h-16 w-16 bg-brand-gray rounded-sm flex items-center justify-center mb-6 group-hover:bg-brand-red transition-colors">
-                        <i data-lucide="move-up-right" class="text-white w-8 h-8"></i>
-                    </div>
-                    <h4 class="text-2xl font-heading font-bold text-white uppercase mb-3">Safety Vault</h4>
-                    <p class="text-gray-400 font-light mb-4">Das grundlegendste Hindernis-Überwindungs-Manöver. Eine Hand und der entgegengesetzte Fuß stützen den Körper, während das andere Bein hindurchschwingt.</p>
-                    <span class="text-xs font-mono text-brand-red bg-brand-red/10 px-2 py-1 rounded">Anfänger</span>
-                </div>
-
-                <!-- Tech Card 2 -->
-                <div class="bg-brand-dark p-8 rounded-sm border border-white/10 hover:border-brand-red/50 transition-colors group">
-                    <div class="h-16 w-16 bg-brand-gray rounded-sm flex items-center justify-center mb-6 group-hover:bg-brand-red transition-colors">
-                        <i data-lucide="circle-dashed" class="text-white w-8 h-8"></i>
-                    </div>
-                    <h4 class="text-2xl font-heading font-bold text-white uppercase mb-3">PK Roll (Rolle)</h4>
-                    <p class="text-gray-400 font-light mb-4">Essenziell für die Sicherheit. Eine diagonale Rolle über die Schulter zur gegenüberliegenden Hüfte, um Aufprallenergie nach Sprüngen abzubauen.</p>
-                    <span class="text-xs font-mono text-brand-red bg-brand-red/10 px-2 py-1 rounded">Essenziell</span>
-                </div>
-
-                <!-- Tech Card 3 -->
-                <div class="bg-brand-dark p-8 rounded-sm border border-white/10 hover:border-brand-red/50 transition-colors group">
-                    <div class="h-16 w-16 bg-brand-gray rounded-sm flex items-center justify-center mb-6 group-hover:bg-brand-red transition-colors">
-                        <i data-lucide="crosshairs" class="text-white w-8 h-8"></i>
-                    </div>
-                    <h4 class="text-2xl font-heading font-bold text-white uppercase mb-3">Precision Jump</h4>
-                    <p class="text-gray-400 font-light mb-4">Ein Sprung von einem Objekt zu einem anderen, spezifischen Zielpunkt (oft schmal, wie Mauerkanten), wobei exakt auf den Fußballen gelandet wird.</p>
-                    <span class="text-xs font-mono text-brand-red bg-brand-red/10 px-2 py-1 rounded">Fortgeschritten</span>
-                </div>
-            </div>
-            
-            <div class="mt-12 text-center">
-                <a href="#" class="inline-flex items-center text-white hover:text-brand-red font-medium transition-colors">
-                    Alle Techniken im Video-Lexikon ansehen <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section id="classes" class="py-24 bg-brand-dark">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-brand-red font-heading font-bold text-sm tracking-[0.2em] uppercase mb-2">Die Halle</h2>
-                    <h3 class="text-4xl md:text-5xl font-heading font-bold text-white uppercase mb-6 leading-tight">Trainiere sicher,<br>perform draußen</h3>
+                
+                <div class="relative reveal">
+                    <!-- Dekorative Elemente -->
+                    <div class="absolute -inset-4 bg-brand/20 blur-xl rounded-full"></div>
+                    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Parkour_leap_of_faith.jpg" alt="Traceur beim Sprung zwischen Gebäuden" class="relative rounded-sm shadow-2xl border border-white/10 z-10 w-full object-cover h-[500px] grayscale hover:grayscale-0 transition-all duration-700 object-center">
                     
-                    <p class="text-gray-400 text-lg font-light mb-8">
-                        Unsere 800m² große Indoor-Parkour-Halle bietet das perfekte Umfeld, um Bewegungen sicher zu erlernen. Modulare Setups, Schaumstoffgruben und federnde Böden ermöglichen Progression ohne extremes Risiko.
+                    <!-- Info Box -->
+                    <div class="absolute -bottom-8 -left-8 bg-dark-800 p-6 rounded-sm border-l-4 border-brand shadow-xl z-20 hidden md:block">
+                        <p class="font-display text-2xl text-white font-bold mb-1">1980er</p>
+                        <p class="text-sm text-slate-400">Ursprung in Lisses, Frankreich</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="techniken" class="py-24 bg-dark-800 clip-diagonal-reverse pb-32">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand font-bold tracking-widest uppercase text-sm">Das Fundament</span>
+                <h2 class="font-display font-bold text-4xl md:text-5xl text-white mt-2 uppercase">Kern-Techniken</h2>
+                <p class="mt-4 text-slate-400">Bevor man rennt, muss man das Gehen lernen. Dies sind die Grundbausteine jedes Traceurs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Technik Card 1 -->
+                <div class="bg-dark-900 border border-white/5 rounded-sm p-8 hover:-translate-y-2 transition-transform duration-300 group reveal">
+                    <div class="w-14 h-14 bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+                        <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-3">Präzisionssprung</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        (Saut de précision) Ein Sprung von einem Objekt zu einem anderen kleinen Ziel (z.B. einer Mauer oder Stange). Erfordert perfekte Balance und Einschätzung der Distanz.
                     </p>
-
-                    <div class="space-y-4">
-                        <div class="bg-brand-gray p-4 rounded-sm flex items-center justify-between border-l-4 border-brand-red">
-                            <div>
-                                <h4 class="font-bold text-white text-lg">Intro Class</h4>
-                                <p class="text-gray-400 text-sm">Grundlagen, Fallschule & Mindset</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-brand-red font-bold">Di & Do</span>
-                                <span class="text-gray-500 text-sm">18:00 - 19:30</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-brand-gray p-4 rounded-sm flex items-center justify-between border-l-4 border-white/20">
-                            <div>
-                                <h4 class="font-bold text-white text-lg">Open Gym</h4>
-                                <p class="text-gray-400 text-sm">Freies Training (Zertifikat benötigt)</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-white font-bold">Täglich</span>
-                                <span class="text-gray-500 text-sm">14:00 - 22:00</span>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-brand-gray p-4 rounded-sm flex items-center justify-between border-l-4 border-white/20">
-                            <div>
-                                <h4 class="font-bold text-white text-lg">Outdoor Jam</h4>
-                                <p class="text-gray-400 text-sm">Geführtes Training in der Stadt</p>
-                            </div>
-                            <div class="text-right">
-                                <span class="block text-white font-bold">Samstag</span>
-                                <span class="text-gray-500 text-sm">11:00 - 15:00</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=2069&auto=format&fit=crop" alt="Gym Setup" class="rounded-sm w-full h-64 object-cover">
-                    <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=2069&auto=format&fit=crop" alt="Training" class="rounded-sm w-full h-64 object-cover mt-8">
+                <!-- Technik Card 2 -->
+                <div class="bg-dark-900 border border-white/5 rounded-sm p-8 hover:-translate-y-2 transition-transform duration-300 group reveal" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+                        <i class="fas fa-cat"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-3">Katzensprung</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        (Saut de chat) Beide Hände werden auf das Hindernis gesetzt, während die Beine zwischen den Armen hindurchgezogen werden. Ideal für mittelhohe Mauern.
+                    </p>
+                </div>
+
+                <!-- Technik Card 3 -->
+                <div class="bg-dark-900 border border-white/5 rounded-sm p-8 hover:-translate-y-2 transition-transform duration-300 group reveal" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-3">Die Rolle</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        (Roulade) Die wichtigste Technik für die Sicherheit. Eine diagonale Abrollbewegung über die Schulter, um bei einem Fall (Drop) die kinetische Energie abzubauen.
+                    </p>
+                </div>
+
+                <!-- Technik Card 4 -->
+                <div class="bg-dark-900 border border-white/5 rounded-sm p-8 hover:-translate-y-2 transition-transform duration-300 group reveal">
+                    <div class="w-14 h-14 bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+                        <i class="fas fa-level-up-alt"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-3">Wall Run</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        (Passe-muraille) Die Technik, um hohe Mauern zu überwinden. Ein Fußtritt an die Wand wandelt die Vorwärtsenergie in eine Aufwärtsbewegung um.
+                    </p>
+                </div>
+
+                <!-- Technik Card 5 -->
+                <div class="bg-dark-900 border border-white/5 rounded-sm p-8 hover:-translate-y-2 transition-transform duration-300 group reveal" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+                        <i class="fas fa-hand-holding"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-3">Saut de Bras</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        (Armsprung) Man springt an eine Kante, greift sie mit den Händen und stemmt die Füße gegen die Wand darunter, um nicht abzurutschen.
+                    </p>
+                </div>
+
+                <!-- Technik Card 6 -->
+                <div class="bg-dark-900 border border-white/5 rounded-sm p-8 hover:-translate-y-2 transition-transform duration-300 group reveal" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-brand/10 text-brand rounded-full flex items-center justify-center text-2xl mb-6 group-hover:bg-brand group-hover:text-white transition-colors">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-2xl text-white mb-3">Passement</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Allgemeiner Begriff für das Überwinden eines Hindernisses im Lauf. Es gibt zahlreiche Variationen (Lazy Vault, Speed Vault), um Momentum zu behalten.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="join" class="py-24 relative">
-        <div class="absolute inset-0 bg-brand-red/90 mix-blend-multiply z-10"></div>
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1583244243621-0a6fc386561f?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center bg-fixed filter grayscale"></div>
-        
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center">
-            <h2 class="text-4xl md:text-6xl font-heading font-bold text-white uppercase mb-6">Bereit für den ersten Sprung?</h2>
-            <p class="text-white/80 text-xl font-light mb-10">Melde dich jetzt für ein kostenloses Probetraining an. Keine Vorkenntnisse nötig.</p>
+    <section id="training" class="py-24 bg-action-pattern bg-cover bg-center bg-fixed relative">
+        <div class="absolute inset-0 bg-dark-900/80"></div> <!-- Overlay -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center reveal">
+            <h2 class="font-display font-bold text-4xl md:text-6xl text-white mb-6 uppercase">Bereit für den <span class="text-brand">ersten Schritt?</span></h2>
+            <p class="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
+                Egal ob Anfänger oder Fortgeschrittener. Unsere ausgebildeten Coaches bringen dir bei, wie du dich sicher und effizient in deiner Umgebung bewegst.
+            </p>
             
-            <form class="bg-brand-dark/80 backdrop-blur-md p-8 rounded-sm border border-white/20 text-left" onsubmit="event.preventDefault(); showSuccessMessage();">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Vorname</label>
-                        <input type="text" required class="w-full bg-brand-gray border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-colors">
+            <div class="bg-dark-800/90 backdrop-blur-sm p-8 md:p-12 border border-white/10 rounded-sm shadow-2xl">
+                <h3 class="text-2xl font-bold text-white mb-6">Starte dein Abenteuer</h3>
+                
+                <form id="contact-form" class="space-y-4 text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">Vorname</label>
+                            <input type="text" class="w-full bg-dark-900 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors" placeholder="Dein Name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-400 mb-1">E-Mail</label>
+                            <input type="email" class="w-full bg-dark-900 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-colors" placeholder="deine@email.de">
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Nachname</label>
-                        <input type="text" required class="w-full bg-brand-gray border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-colors">
+                        <label class="block text-sm font-medium text-slate-400 mb-1">Erfahrungslevel</label>
+                        <select class="w-full bg-dark-900 border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand appearance-none">
+                            <option>Kompletter Anfänger</option>
+                            <option>Ich habe schon etwas Erfahrung</option>
+                            <option>Fortgeschritten (Traceur)</option>
+                        </select>
                     </div>
-                </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">E-Mail Adresse</label>
-                    <input type="email" required class="w-full bg-brand-gray border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand-red focus:ring-1 focus:ring-brand-red transition-colors">
-                </div>
-                <div class="mb-8">
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Erfahrung Level</label>
-                    <select class="w-full bg-brand-gray border border-white/10 rounded-sm px-4 py-3 text-white focus:outline-none focus:border-brand-red appearance-none">
-                        <option>Absoluter Anfänger</option>
-                        <option>Ich mache andere Sportarten</option>
-                        <option>Einige Parkour-Basics vorhanden</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="w-full bg-brand-red hover:bg-red-700 text-white py-4 rounded-sm font-heading font-bold text-lg uppercase tracking-wider transition-colors">
-                    Probetraining anfragen
-                </button>
-                
-                <!-- Success Message Container -->
-                <div id="success-message" class="hidden mt-4 p-4 bg-green-500/20 border border-green-500 text-green-400 rounded-sm text-center font-medium">
-                    Anfrage erfolgreich gesendet! Wir melden uns in Kürze.
-                </div>
-            </form>
+                    <button type="button" onclick="showSuccessMessage()" class="w-full mt-4 bg-brand text-white font-bold py-4 rounded-sm hover:bg-brand-dark transition-all transform hover:-translate-y-0.5 shadow-lg uppercase tracking-wider">
+                        Probetraining Anfragen
+                    </button>
+                    <!-- Feedback Message -->
+                    <div id="form-feedback" class="hidden mt-4 p-4 bg-green-500/20 border border-green-500/50 text-green-400 rounded-sm text-center font-medium">
+                        Deine Anfrage wurde gesendet! Wir melden uns in Kürze.
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-[#0a0a0a] border-t border-white/5 py-12">
+    <footer id="kontakt" class="bg-dark-900 border-t border-white/5 pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center gap-2 mb-4 md:mb-0">
-                    <i data-lucide="footprints" class="text-brand-red h-6 w-6"></i>
-                    <span class="font-heading font-bold text-xl tracking-wider text-white uppercase">Urban Flow</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+                <!-- Brand -->
+                <div>
+                    <a href="#" class="font-display font-bold text-2xl tracking-wider text-white block mb-4">
+                        URBAN<span class="text-brand">TRACEURS</span>
+                    </a>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                        Förderung der urbanen Bewegungskunst. Sicheres, respektvolles und effizientes Training für Körper und Geist.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-dark-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-brand transition-all">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-dark-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-brand transition-all">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-dark-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-brand transition-all">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
                 </div>
-                
-                <div class="flex space-x-6 text-gray-400">
-                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="youtube" class="w-5 h-5"></i></a>
-                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-display font-bold uppercase tracking-wider mb-4">Schnelllinks</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#philosophie" class="text-slate-400 hover:text-brand text-sm transition-colors">Unsere Philosophie</a></li>
+                        <li><a href="#techniken" class="text-slate-400 hover:text-brand text-sm transition-colors">Parkour Techniken</a></li>
+                        <li><a href="#training" class="text-slate-400 hover:text-brand text-sm transition-colors">Kurse & Training</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-brand text-sm transition-colors">Häufige Fragen (FAQ)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-display font-bold uppercase tracking-wider mb-4">Kontakt</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-slate-400 text-sm">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-brand"></i>
+                            <span>Urban Plaza 42<br>10115 Berlin, Deutschland</span>
+                        </li>
+                        <li class="flex items-center text-slate-400 text-sm">
+                            <i class="fas fa-envelope mr-3 text-brand"></i>
+                            <span>info@urbantraceurs.beispiel</span>
+                        </li>
+                        <li class="flex items-center text-slate-400 text-sm">
+                            <i class="fas fa-phone mr-3 text-brand"></i>
+                            <span>+49 30 123456789</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                <p>&copy; 2026 Urban Flow Parkour. Alle Rechte vorbehalten.</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white transition-colors">Impressum</a>
-                    <a href="#" class="hover:text-white transition-colors">Datenschutz</a>
-                    <a href="#" class="hover:text-white transition-colors">Haftungsausschluss</a>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-slate-500 text-sm mb-4 md:mb-0">
+                    &copy; 2026 Urban Traceurs. Alle Rechte vorbehalten. (Demoseite für GitHub Pages)
+                </p>
+                <div class="flex space-x-6 text-sm">
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors">Impressum</a>
+                    <a href="#" class="text-slate-500 hover:text-white transition-colors">Datenschutz</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle Logic
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
 
@@ -356,38 +384,58 @@
             menu.classList.toggle('hidden');
         });
 
-        // Close mobile menu on link click
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
+        // Close mobile menu when a link is clicked
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.add('hidden');
             });
         });
 
-        // Navbar blur effect on scroll
+        // Scroll Reveal Animation Logic (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOptions = {
+            threshold: 0.15, // Trigger when 15% of element is visible
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, revealOptions);
+
+        revealElements.forEach(el => {
+            revealOnScroll.observe(el);
+        });
+
+        // Sticky Navbar styling on scroll
+        const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg');
+                navbar.classList.add('shadow-lg');
+                navbar.classList.replace('bg-dark-900/90', 'bg-dark-900/98');
             } else {
-                nav.classList.remove('shadow-lg');
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.replace('bg-dark-900/98', 'bg-dark-900/90');
             }
         });
 
-        // Form Submission Mockup (No alert used)
+        // Custom Form Submit Simulation (Instead of alert)
         function showSuccessMessage() {
-            const form = document.querySelector('form');
-            const successMsg = document.getElementById('success-message');
+            const feedback = document.getElementById('form-feedback');
+            feedback.classList.remove('hidden');
             
-            // Hide submit button, show message
-            form.querySelector('button[type="submit"]').classList.add('hidden');
-            successMsg.classList.remove('hidden');
-            
-            // Reset after 3 seconds for demo purposes
+            // Hide after 5 seconds
             setTimeout(() => {
-                form.reset();
-                form.querySelector('button[type="submit"]').classList.remove('hidden');
-                successMsg.classList.add('hidden');
-            }, 3000);
+                feedback.classList.add('hidden');
+            }, 5000);
         }
     </script>
 </body>
