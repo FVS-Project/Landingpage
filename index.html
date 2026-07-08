@@ -44,7 +44,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                         display: ['Oswald', 'sans-serif'],
                     },
                     backgroundImage: {
-                        'hero-pattern': "linear-gradient(to right bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.6)), url('https://i.ibb.co/0yLTwcP2/IMG-3256.jpg')",
+                        // hero-pattern wurde entfernt, da wir nun ein Video + Tailwind Gradients nutzen
                         'action-pattern': "linear-gradient(to right, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.8)), url('https://i.ibb.co/N2kBtFfp/IMG-3258.jpg')",
                     }
                 }
@@ -122,7 +122,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
     </nav>
 
-    <header class="relative h-screen min-h-[600px] flex items-center justify-center bg-hero-pattern bg-cover bg-center bg-no-repeat bg-fixed clip-diagonal">
+    <!-- HEADER ANGEPASST FÜR VIDEO-HINTERGRUND -->
+    <header class="relative h-screen min-h-[600px] flex items-center justify-center clip-diagonal overflow-hidden">
+        
+        <!-- Video Background Element -->
+        <!-- WICHTIG: autoplay, muted und playsinline sind zwingend erforderlich, damit Videos auf Handys und in Browsern automatisch starten -->
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+            <!-- HIER KOMMT DER NAME DEINER VIDEO-DATEI REIN -->
+            <source src="Parkourvideo.mp4" type="video/mp4">
+            Dein Browser unterstützt keine HTML5 Videos.
+        </video>
+
+        <!-- Dunkler Gradient über dem Video für bessere Lesbarkeit des Textes -->
+        <div class="absolute inset-0 bg-gradient-to-br from-dark-900/90 to-dark-900/50"></div>
+
+        <!-- Content -->
         <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16">
             <span class="block text-brand font-bold tracking-[0.2em] uppercase mb-4 text-sm md:text-base reveal">L'art du déplacement</span>
             <h1 class="font-display font-bold text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-tight mb-6 reveal shadow-black drop-shadow-lg" style="transition-delay: 100ms;">
@@ -142,7 +156,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </div>
         
         <!-- Scroll Down Indicator -->
-        <div class="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div class="absolute bottom-16 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
             <a href="#philosophie" class="text-white/50 hover:text-white transition-colors">
                 <i class="fas fa-chevron-down text-2xl"></i>
             </a>
